@@ -23,3 +23,15 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assests", express.static(path.join(__dirname, "public/assests")));
+
+//* STORAGE
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/assests");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
