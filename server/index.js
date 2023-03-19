@@ -9,6 +9,8 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import { register } from "./controllers/auth.js";
+
 //* CONFIGURATION
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,3 +37,24 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+//* Routes with files
+app.post("/auth/register", upload.single("picture"), register);
+
+//* MOONGOOSE
+const port = process.env.PORT || 3002;
+const DB = process.env.MONGO_URL;
+
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server running on port: ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.log(`Error: ${error.message}`);
+  });
