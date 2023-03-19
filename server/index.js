@@ -11,6 +11,8 @@ import { fileURLToPath } from "url";
 
 import { register } from "./controllers/auth.js";
 
+import { authRoutes } from "./routes/auth.js";
+
 //* CONFIGURATION
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,8 +40,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-//* Routes with files
+//? ROUTES WITH FILES
 app.post("/auth/register", upload.single("picture"), register);
+
+//* ROUTES
+app.use("/auth", authRoutes);
 
 //* MOONGOOSE
 const port = process.env.PORT || 3002;
