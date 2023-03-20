@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 
 const formatFriends = async (user) => {
   const friends = await Promise.all(
