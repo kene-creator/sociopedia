@@ -74,7 +74,20 @@ export default function Form() {
     }
   };
 
-  const login = async (values, onSubmitProps) => {};
+  const login = async (values, onSubmitProps) => {
+    const response = await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const loggedInUser = await response.json();
+    onSubmitProps.resetForm();
+
+    if (loggedInUser) {
+      dispatch(setLogin({ user: loggedInUser, token: loggedInUser.token }));
+      navigate("/home");
+    }
+  };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
@@ -197,7 +210,7 @@ export default function Form() {
               name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
-              sx={{ gridColumn: "span 2" }}
+              sx={{ gridColumn: "span 4" }}
             />
             <TextField
               label="Password"
@@ -208,7 +221,7 @@ export default function Form() {
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
-              sx={{ gridColumn: "span 2" }}
+              sx={{ gridColumn: "span 4" }}
             />
           </Box>
           {/* BUTTONS */}
@@ -221,7 +234,10 @@ export default function Form() {
                 p: "1rem",
                 backgroundColor: palette.primary.main,
                 color: palette.background.alt,
-                "&:hover": { color: palette.primary.main },
+                "&:hover": {
+                  color: palette.primary.main,
+                  backgroundColor: palette.primary.dark,
+                },
               }}
             >
               {isLogin ? "Login" : "Register"}
