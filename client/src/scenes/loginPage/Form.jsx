@@ -47,7 +47,7 @@ const initialValuesLogin = {
 };
 
 export default function Form() {
-  const [pageType, setPageType] = useState("register");
+  const [pageType, setPageType] = useState("login");
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -186,6 +186,37 @@ export default function Form() {
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 2" }}
             />
+          </Box>
+          {/* BUTTONS */}
+          <Box>
+            <Button
+              fullWidth
+              type="submit"
+              sx={{
+                m: "2rem 0",
+                p: "1rem",
+                backgroundColor: palette.primary.main,
+                color: palette.background.alt,
+                "&:hover": { color: palette.primary.main },
+              }}
+            >
+              {isLogin ? "Login" : "Register"}
+            </Button>
+            <Typography
+              onClick={() => {
+                setPageType(isLogin ? "register" : "login");
+                resetForm();
+              }}
+              sx={{
+                textDecoration: "underline",
+                color: palette.primary.main,
+                "&:hover": { cursor: "pointer", color: palette.primary.dark },
+              }}
+            >
+              {isLogin
+                ? "Don't have an account? Sign up"
+                : "Already have an account? Login"}
+            </Typography>
           </Box>
         </form>
       )}
