@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/post.js";
 
-// import { authRoutes } from "./routes/auth.js";
+import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/post.js";
 
@@ -33,12 +33,12 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-app.use("/assests", express.static(path.join(__dirname, "public/assests")));
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 //* STORAGE
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/assests");
+    cb(null, "public/assets");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -52,7 +52,7 @@ app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", upload.single("picture"), createPost);
 
 //* ROUTES
-// app.use("/auth", authRoutes);
+app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/posts", postRoutes);
 

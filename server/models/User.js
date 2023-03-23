@@ -14,10 +14,10 @@ const userSchema = mongoose.Schema(
       min: 2,
       max: 50,
     },
-    lastName: {
+    email: {
       type: String,
       required: true,
-      max: 50,
+      max: 60,
       unique: true,
     },
     password: {
