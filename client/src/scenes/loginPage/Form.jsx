@@ -81,10 +81,16 @@ export default function Form() {
       body: JSON.stringify(values),
     });
     const loggedInUser = await response.json();
+    console.log(loggedInUser);
     onSubmitProps.resetForm();
 
     if (loggedInUser) {
-      dispatch(setLogin({ user: loggedInUser, token: loggedInUser.token }));
+      dispatch(
+        setLogin({
+          user: loggedInUser.data.user,
+          token: loggedInUser.data.token,
+        })
+      );
       navigate("/home");
     }
   };
