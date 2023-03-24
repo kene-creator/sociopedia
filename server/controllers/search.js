@@ -6,7 +6,6 @@ const search = async (req, res) => {
     let users = await User.find({
       firstName: { $regex: payload, $options: "i" },
     });
-    console.log(users);
 
     res.status(200).json({ users });
   } catch (error) {
