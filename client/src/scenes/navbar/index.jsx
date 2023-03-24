@@ -27,6 +27,7 @@ import FlexBetween from "../../components/FlexBetween";
 
 export default function Navbar() {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -40,6 +41,21 @@ export default function Navbar() {
 
   // const fullName = `${user.firstName} ${user.lastName}`;
   const fullName = "John Doe";
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:3001/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payload: search }),
+    });
+    const searchResults = await response.json();
+    console.log(searchResults);
+  };
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -65,7 +81,15 @@ export default function Navbar() {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
+            <InputBase
+              placeholder="Search..."
+              value={search}
+              onChange={handleChange}
+              onKeyUp={handleChange}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") handleSubmit(event);
+              }}
+            />
             <IconButton>
               <Search />
             </IconButton>

@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/post.js";
+import search from "./controllers/search.js";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
@@ -29,7 +30,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-app.use(morgan("common"));
+app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
@@ -48,6 +49,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //? ROUTES WITH FILES
+app.post("/search", search);
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", upload.single("picture"), createPost);
 
