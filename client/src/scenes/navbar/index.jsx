@@ -43,8 +43,16 @@ export default function Navbar() {
   // const fullName = `${user.firstName} ${user.lastName}`;
   const fullName = "John Doe";
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setSearch(e.target.value);
+    const response = await fetch("http://localhost:3001/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payload: search }),
+    });
+    const searchResults = await response.json();
+    console.log(searchResults.users);
+    setSearchResults(searchResults.users);
   };
 
   const handleSubmit = async (e) => {
