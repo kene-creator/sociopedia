@@ -51,7 +51,6 @@ export default function Navbar() {
       body: JSON.stringify({ payload: search }),
     });
     const searchResults = await response.json();
-    console.log(searchResults.users);
     setSearchResults(searchResults.users);
   };
 
@@ -65,6 +64,11 @@ export default function Navbar() {
     const searchResults = await response.json();
     console.log(searchResults.users);
     setSearchResults(searchResults.users);
+  };
+
+  const handleBlur = () => {
+    setSearchResults([]);
+    setSearch("");
   };
 
   return (
@@ -97,6 +101,7 @@ export default function Navbar() {
                 value={search}
                 onChange={handleChange}
                 onKeyUp={handleChange}
+                onBlur={handleBlur}
                 onKeyDown={(event) => {
                   if (event.key === "Enter") handleSubmit(event);
                 }}
