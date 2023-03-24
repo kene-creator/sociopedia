@@ -121,12 +121,16 @@ export default function Navbar() {
                   );
                 })
               ) : (
-                <Box
-                  backgroundColor={theme.palette.background.default}
-                  p="1rem"
-                  borderBottom="1px solid #121212"
-                >
-                  <p>No results found</p>
+                <Box>
+                  {search && (
+                    <Box
+                      backgroundColor={theme.palette.background.default}
+                      p="1rem"
+                      borderBottom="1px solid #121212"
+                    >
+                      <p>No results found</p>
+                    </Box>
+                  )}
                 </Box>
               )}
             </Box>
