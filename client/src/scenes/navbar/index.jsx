@@ -27,6 +27,8 @@ import FlexBetween from "../../components/FlexBetween";
 
 export default function Navbar() {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -40,6 +42,30 @@ export default function Navbar() {
 
   // const fullName = `${user.firstName} ${user.lastName}`;
   const fullName = "John Doe";
+
+  const handleChange = async (e) => {
+    setSearch(e.target.value);
+    const response = await fetch("http://localhost:3001/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payload: search }),
+    });
+    const searchResults = await response.json();
+    console.log(searchResults.users);
+    setSearchResults(searchResults.users);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:3001/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payload: search }),
+    });
+    const searchResults = await response.json();
+    console.log(searchResults.users);
+    setSearchResults(searchResults.users);
+  };
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -59,17 +85,52 @@ export default function Navbar() {
           Sociopedia
         </Typography>
         {isNonMobile && (
-          <FlexBetween
-            backgroundColor={neutralLight}
-            borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
+          <Box>
+            <FlexBetween
+              backgroundColor={neutralLight}
+              borderRadius="9px"
+              gap="3rem"
+              padding="0.1rem 1.5rem"
+            >
+              <InputBase
+                placeholder="Search..."
+                value={search}
+                onChange={handleChange}
+                onKeyUp={handleChange}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") handleSubmit(event);
+                }}
+              />
+              <IconButton>
+                <Search />
+              </IconButton>
+            </FlexBetween>
+            <Box width="22.5%" position="absolute" top="3.75rem">
+              {searchResults.length > 0 ? (
+                searchResults.map((results) => {
+                  return (
+                    <Box
+                      backgroundColor={theme.palette.background.default}
+                      p="1rem"
+                      borderBottom="1px solid #121212"
+                    >
+                      <Typography color="#121212" fontSize="1.5rem">
+                        {results.firstName}
+                      </Typography>
+                    </Box>
+                  );
+                })
+              ) : (
+                <Box
+                  backgroundColor={theme.palette.background.default}
+                  p="1rem"
+                  borderBottom="1px solid #121212"
+                >
+                  <p>No results found</p>
+                </Box>
+              )}
+            </Box>
+          </Box>
         )}
       </FlexBetween>
       {/* Desktop Nav */}
