@@ -12,7 +12,7 @@ import FlexBetween from "../../components/FlexBetween";
 import WidgetWrapper from "../../components/WidgetsWrapper";
 import { useSelector } from "react-redux";
 
-const UserWidgets = ({ pictureId, picturePath }) => {
+const UserWidgets = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const UserWidgets = ({ pictureId, picturePath }) => {
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
+  console.log(token);
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -27,9 +28,10 @@ const UserWidgets = ({ pictureId, picturePath }) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    setUser(data);
+    console.log(data.data.user);
+    setUser(data.data.user);
   };
-
+  console.log(user);
   useEffect(() => {
     getUser();
   }, []);

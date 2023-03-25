@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
   try {
-    let token = req.header("Authorization");
+    let token = req.headers.authorization;
+    console.log(req.user);
 
     if (!token) {
       res.status(403).json({
@@ -18,12 +19,7 @@ export const verifyToken = (req, res, next) => {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
     next();
-  } catch (error) {
-    if (!user) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Wrong email or password",
-      });
-    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
