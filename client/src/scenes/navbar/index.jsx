@@ -119,7 +119,7 @@ export default function Navbar() {
                       p="1rem"
                       borderBottom="1px solid #121212"
                     >
-                      <Typography color="#121212" fontSize="1.5rem">
+                      <Typography color="primary" fontSize="1.5rem">
                         {results.firstName}
                       </Typography>
                     </Box>
