@@ -20,7 +20,6 @@ const UserWidgets = ({ userId, picturePath }) => {
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-  console.log(token);
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -31,7 +30,7 @@ const UserWidgets = ({ userId, picturePath }) => {
     console.log(data.data.user);
     setUser(data.data.user);
   };
-  console.log(user);
+
   useEffect(() => {
     getUser();
   }, []);
@@ -75,8 +74,8 @@ const UserWidgets = ({ userId, picturePath }) => {
           </Box>
           <ManageAccountsOutlined />
         </FlexBetween>
-        <Divider />
       </FlexBetween>
+      <Divider />
 
       <Box p="1rem 0">
         <Box display="flex" alignItems="center" mb="0.5rem" gap="1rem">
@@ -88,6 +87,7 @@ const UserWidgets = ({ userId, picturePath }) => {
           <Typography color={medium}>{occupation}</Typography>
         </Box>
       </Box>
+      <Divider />
 
       <Box p="1rem 0">
         <FlexBetween mb="0.5rem">
@@ -103,6 +103,7 @@ const UserWidgets = ({ userId, picturePath }) => {
           </Typography>
         </FlexBetween>
       </Box>
+      <Divider />
 
       <Box p="1rem 0">
         <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
