@@ -55,7 +55,7 @@ app.post("/posts", upload.single("picture"), createPost);
 
 //* ROUTES
 app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
 //* MOONGOOSE
