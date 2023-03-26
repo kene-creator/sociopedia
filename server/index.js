@@ -20,6 +20,7 @@ import postRoutes from "./routes/post.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
+import { verifyToken } from "./middleware/auth.js";
 
 //* CONFIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -51,7 +52,7 @@ const upload = multer({ storage });
 //? ROUTES WITH FILES
 app.post("/search", search);
 app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", upload.single("picture"), createPost);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 //* ROUTES
 app.use("/auth", authRoutes);
