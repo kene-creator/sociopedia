@@ -128,6 +128,39 @@ const MyPostWidget = ({ picturePath }) => {
             Image
           </Typography>
         </FlexBetween>
+        {isNonMobile ? (
+          <>
+            <FlexBetween gap="0.25rem">
+              <GifBoxOutlined sx={{ color: mediumMain }} />
+              <Typography color={mediumMain}>Clip</Typography>
+            </FlexBetween>
+            <FlexBetween gap="0.25rem">
+              <AttachFileOutlined sx={{ color: mediumMain }} />
+              <Typography color={mediumMain}>Attachment</Typography>
+            </FlexBetween>
+            <FlexBetween gap="0.25rem">
+              <MicOutlined sx={{ color: mediumMain }} />
+              <Typography color={mediumMain}>Audio</Typography>
+            </FlexBetween>
+          </>
+        ) : (
+          <>
+            <FlexBetween gap="0.25rem">
+              <MoreHorizOutlined sx={{ color: mediumMain }} />
+            </FlexBetween>
+          </>
+        )}
+        <Button
+          disabled={!post}
+          onClick={handlePost}
+          sx={{
+            color: palette.background.default,
+            backgroundColor: palette.primary.main,
+            borderRadius: "3rem",
+          }}
+        >
+          POST
+        </Button>
       </FlexBetween>
     </WidgetWrapper>
   );
