@@ -10,7 +10,7 @@ export default function FriendListWidgets({ userId }) {
   const { palette } = useTheme();
   const theme = useTheme();
   const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => [state.user.friends]);
+  const friends = useSelector((state) => state.user.friends);
 
   const getFriends = async () => {
     const response = await fetch(`http://localhost:3001/${userId}/friends`, {
@@ -21,12 +21,14 @@ export default function FriendListWidgets({ userId }) {
       },
     });
     const data = await response.json();
+    console.log(data);
     dispatch(setFriends({ friends: data.data.friends }));
   };
 
   useEffect(() => {
     getFriends();
   }, []);
+  console.log(friends, userId);
 
   return (
     <WidgetWrapper>
@@ -41,6 +43,7 @@ export default function FriendListWidgets({ userId }) {
         {friends.map((friend) => (
           <Friend
             key={friend._id}
+            friendId={friend._id}
             name={`${friend.firstName} ${friend.lastName}`}
             subtitile={friend.occupation}
             userPicturePath={friend.picturePath}
