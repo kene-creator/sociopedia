@@ -19,6 +19,7 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import FlexBetween from "../../components/FlexBetween";
 import Dropzone from "react-dropzone";
@@ -58,9 +59,8 @@ const MyPostWidget = ({ picturePath }) => {
     dispatch(setPost({ post: data.data.post }));
     setImage(null);
     setPostText("");
+    setLoading(false);
   };
-
-  console.log(post, image);
 
   return (
     <WidgetWrapper>
@@ -166,7 +166,7 @@ const MyPostWidget = ({ picturePath }) => {
             borderRadius: "3rem",
           }}
         >
-          POST
+          {loading ? <CircularProgress size="1rem" /> : "POST"}
         </Button>
       </FlexBetween>
     </WidgetWrapper>
