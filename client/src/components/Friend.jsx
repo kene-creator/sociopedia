@@ -18,7 +18,6 @@ export default function Friend({ friendId, subtitle, name, userPicturePath }) {
   const primaryDark = palette.primary.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-  console.log(friendId);
 
   const isFriend = friends.find((friend) => friend._id === friendId);
 

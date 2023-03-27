@@ -21,14 +21,12 @@ export default function FriendListWidgets({ userId }) {
       },
     });
     const data = await response.json();
-    console.log(data);
     dispatch(setFriends({ friends: data.data.friends }));
   };
 
   useEffect(() => {
     getFriends();
   }, []);
-  console.log(friends, userId);
 
   return (
     <WidgetWrapper>
