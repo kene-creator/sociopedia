@@ -2,7 +2,7 @@ import express from "express";
 import {
   getUser,
   getUserFriends,
-  addRemoveFriends,
+  addRemoveFriend,
 } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -13,6 +13,6 @@ router.route("/:id").get(verifyToken, getUser);
 router.route("/:id/friends").get(verifyToken, getUserFriends);
 
 //* UPDATE
-router.route("/:id/:friendId").patch(verifyToken, addRemoveFriends);
+router.route("/:id/:friendId").patch(verifyToken, addRemoveFriend);
 
 export default router;

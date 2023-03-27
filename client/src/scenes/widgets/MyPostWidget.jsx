@@ -10,6 +10,7 @@ import {
   MicOutlined,
   MoreHorizOutlined,
 } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Divider,
@@ -19,17 +20,22 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import FlexBetween from "../../components/FlexBetween";
 import Dropzone from "react-dropzone";
 import UserImage from "../../components/UserImage";
 import WidgetWrapper from "../../components/WidgetsWrapper";
+import PostSnackBar from "../../components/PostSnackBar";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
-  const [post, setPost] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [post, setPostText] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
@@ -38,6 +44,7 @@ const MyPostWidget = ({ picturePath }) => {
   const medium = palette.neutral.medium;
 
   const handlePost = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
@@ -55,16 +62,45 @@ const MyPostWidget = ({ picturePath }) => {
     const data = await response.json();
     dispatch(setPost({ post: data.data.post }));
     setImage(null);
-    setPost("");
+    setPostText("");
+    setLoading(false);
+    setOpenSnackbar(true);
   };
+
+  const action = (
+    <>
+      <Button
+        color="secondary"
+        size="small"
+        onClick={() => setOpenSnackbar(false)}
+      >
+        Close
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={() => setOpenSnackbar(false)}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
 
   return (
     <WidgetWrapper>
+      {openSnackbar && (
+        <PostSnackBar
+          action={action}
+          open={openSnackbar}
+          handleClose={() => setOpenSnackbar(false)}
+        />
+      )}
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />
         <InputBase
           placeholder="Whats on your mind..."
-          onChange={(e) => setPost(e.target.value)}
+          onChange={(e) => setPostText(e.target.value)}
           value={post}
           sx={{
             width: "100%",
@@ -162,7 +198,7 @@ const MyPostWidget = ({ picturePath }) => {
             borderRadius: "3rem",
           }}
         >
-          POST
+          {loading ? <CircularProgress size="1rem" /> : "POST"}
         </Button>
       </FlexBetween>
     </WidgetWrapper>

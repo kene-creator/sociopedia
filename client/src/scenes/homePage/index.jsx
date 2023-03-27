@@ -2,9 +2,11 @@ import React from "react";
 import { Box, useMediaQuery } from "@mui/material";
 import Navbar from "./../navbar/index";
 import { useSelector } from "react-redux";
-import UserWidgets from "../widgets/UserWidgets";
-import MyPostWidget from "../widgets/MyPostWidget";
+import UserWidgets from "../../scenes/widgets/UserWidgets";
+import MyPostWidget from "../../scenes/widgets/MyPostWidget";
 import PostsWidgets from "../../scenes/widgets/PostsWidgets";
+import AdvertWidget from "../../scenes/widgets/AdvertWidget";
+import FriendListWidgets from "../../scenes/widgets/FriendListWidgets";
 
 export default function HomePage() {
   const isNonMobile = useMediaQuery("(min-width: 1000px)");
@@ -30,7 +32,14 @@ export default function HomePage() {
           <MyPostWidget picturePath={picturePath} />
           <PostsWidgets userId={_id} />
         </Box>
-        {isNonMobile && <Box flexbasis="26%"></Box>}
+        {isNonMobile && (
+          <Box flexbasis="26%">
+            <AdvertWidget />
+            <Box m="2rem 0">
+              <FriendListWidgets userId={_id} />
+            </Box>
+          </Box>
+        )}
       </Box>
     </Box>
   );
