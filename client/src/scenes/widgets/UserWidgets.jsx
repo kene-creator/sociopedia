@@ -6,7 +6,6 @@ import {
   LocationOnOutlined,
   WorkOutlineOutlined,
 } from "@mui/icons-material";
-import { CircularProgress } from "@mui/joy";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
@@ -26,22 +25,25 @@ const UserWidgets = ({ userId, picturePath }) => {
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
+  console.log(isLoading);
   const getUser = async () => {
-    setIsLoading(true);
-    setTimeout(async () => {
-      const response = await fetch(`http://localhost:3001/users/${userId}`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await response.json();
-      setUser(data.data.user);
-      setIsLoading(false);
-    }, 8000); // Delay time in milliseconds (2 seconds in this example)
+    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setUser(data.data.user);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    getUser();
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      getUser();
+    }, 3000);
+    return () => clearTimeout(timer);
   }, []);
+  console.log(isLoading);
 
   if (!user) return null;
 
