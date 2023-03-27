@@ -27,7 +27,7 @@ export const createPost = async (req, res) => {
       },
     });
   } catch (error) {
-    req.status(400).json({
+    res.status(400).json({
       status: "failed",
       message: error.message,
     });
@@ -45,7 +45,7 @@ export const getPostFeed = async (req, res) => {
       },
     });
   } catch (error) {
-    req.status(400).json({
+    res.status(400).json({
       status: "failed",
       message: error.message,
     });
@@ -64,7 +64,7 @@ export const getUserPosts = async (req, res) => {
       },
     });
   } catch (error) {
-    req.status(400).json({
+    res.status(400).json({
       status: "failed",
       message: error.message,
     });
@@ -97,7 +97,7 @@ export const likePost = async (req, res) => {
       },
     });
   } catch (error) {
-    req.status(400).json({
+    res.status(400).json({
       status: "failed",
       message: error.message,
     });
