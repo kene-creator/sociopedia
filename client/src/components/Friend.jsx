@@ -13,7 +13,7 @@ export default function Friend({ friendId, subtitle, name, userPicturePath }) {
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user.friends);
+  const friends = useSelector((state) => [state.user.friends]);
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
   const medium = palette.neutral.medium;

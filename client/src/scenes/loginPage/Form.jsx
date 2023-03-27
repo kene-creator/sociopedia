@@ -81,7 +81,6 @@ export default function Form() {
       body: JSON.stringify(values),
     });
     const loggedInUser = await response.json();
-    console.log(loggedInUser);
     onSubmitProps.resetForm();
 
     if (loggedInUser) {

@@ -29,7 +29,8 @@ const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
-  const [post, setPost] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [post, setPostText] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
@@ -38,6 +39,7 @@ const MyPostWidget = ({ picturePath }) => {
   const medium = palette.neutral.medium;
 
   const handlePost = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
@@ -55,8 +57,10 @@ const MyPostWidget = ({ picturePath }) => {
     const data = await response.json();
     dispatch(setPost({ post: data.data.post }));
     setImage(null);
-    setPost("");
+    setPostText("");
   };
+
+  console.log(post, image);
 
   return (
     <WidgetWrapper>
@@ -64,7 +68,7 @@ const MyPostWidget = ({ picturePath }) => {
         <UserImage image={picturePath} />
         <InputBase
           placeholder="Whats on your mind..."
-          onChange={(e) => setPost(e.target.value)}
+          onChange={(e) => setPostText(e.target.value)}
           value={post}
           sx={{
             width: "100%",
