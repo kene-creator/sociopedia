@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 export const verifyToken = (req, res, next) => {
   try {
     let token = req.headers.authorization;
@@ -14,17 +16,8 @@ export const verifyToken = (req, res, next) => {
     }
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Allow access if the user ID in the request matches the user ID in the token payload
-    if (req.params.id === verified._id) {
-      req.user = verified;
-      next();
-    } else {
-      res.status(403).json({
-        status: "failed",
-        message: "Access denied",
-      });
-    }
+    req.user = verified;
+    next();
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
