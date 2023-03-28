@@ -12,10 +12,12 @@ import { fileURLToPath } from "url";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/post.js";
 import search from "./controllers/search.js";
+import { getUser } from "./controllers/users.js";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/post.js";
+import homeRoutes from "./routes/home.js";
 
 import User from "./models/User.js";
 import Post from "./models/Post.js";
@@ -53,12 +55,13 @@ const upload = multer({ storage });
 app.post("/search", search);
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.get("/profile/:id", verifyToken, getUser);
 
 //* ROUTES
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
-app.use("/home", verifyToken, userRoutes, postRoutes);
+app.use("/home", homeRoutes);
 
 //* MOONGOOSE
 const port = process.env.PORT || 3002;
