@@ -8,6 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import history from "connect-history-api-fallback";
 
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/post.js";
@@ -29,6 +30,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(history());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("dev"));

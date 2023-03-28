@@ -128,7 +128,7 @@ export default function Form() {
       }, 2000);
     } catch (err) {
       setOpenSnackbar(true);
-      setSnackbarMessage("Login failed❌");
+      setSnackbarMessage("Username or password invalid❌");
       setSnackbarSeverity("error");
       setLoading(false);
     }
