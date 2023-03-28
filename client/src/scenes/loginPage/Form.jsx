@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Button,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -48,6 +49,7 @@ const initialValuesLogin = {
 
 export default function Form() {
   const [pageType, setPageType] = useState("login");
+  const [loading, setLoading] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,53 +58,81 @@ export default function Form() {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
-    const formData = new FormData();
+    try {
+      setLoading(true);
+      const formData = new FormData();
 
-    for (let value in values) {
-      formData.append(value, values[value]);
-    }
-    formData.append("picturePath", values.picture.name);
-
-    const response = await fetch(
-      "https://sociopedia-tw54.onrender.com/auth/register",
-      {
-        method: "POST",
-        body: formData,
+      for (let value in values) {
+        formData.append(value, values[value]);
       }
-    );
-    const savedUser = await response.json();
-    onSubmitProps.resetForm();
-    if (savedUser) {
-      setPageType("login");
+      formData.append("picturePath", values.picture.name);
+
+      const response = await fetch(
+        "https://sociopedia-tw54.onrender.com/auth/register",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const savedUser = await response.json();
+      onSubmitProps.resetForm();
+      if (savedUser) {
+        setPageType("login");
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 
   const login = async (values, onSubmitProps) => {
-    const response = await fetch(
-      "https://sociopedia-tw54.onrender.com/auth/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      }
-    );
-    const loggedInUser = await response.json();
-    onSubmitProps.resetForm();
-
-    if (loggedInUser) {
-      dispatch(
-        setLogin({
-          user: loggedInUser.data.user,
-          token: loggedInUser.data.token,
-        })
+    try {
+      setLoading(true);
+      const response = await fetch(
+        "https://sociopedia-tw54.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        }
       );
-      navigate("/home");
+      const loggedInUser = await response.json();
+      onSubmitProps.resetForm();
+
+      if (loggedInUser) {
+        dispatch(
+          setLogin({
+            user: loggedInUser.data.user,
+            token: loggedInUser.data.token,
+          })
+        );
+        navigate("/home");
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
     }
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
+  };
+
+  const handleLoginButton = () => {
+    if (loading) {
+      return <CircularProgress size="1.5rem" color="inherit" />;
+    } else {
+      return "Login";
+    }
+  };
+
+  const handleRegisterButton = () => {
+    if (loading) {
+      return <CircularProgress size="1.5rem" color="inherit" />;
+    } else {
+      return "Register";
+    }
   };
 
   return (
@@ -251,7 +281,7 @@ export default function Form() {
                 },
               }}
             >
-              {isLogin ? "Login" : "Register"}
+              {isLogin ? handleLoginButton() : handleLogoutButton()}
             </Button>
             <Typography
               onClick={() => {
