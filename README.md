@@ -13,9 +13,9 @@
 - MUI
 - Node.js
 
-## Live Link
+## View the project live
 
-<!-- [Live](https://aiopenimage.netlify.app/) -->
+[Live](https://sociopediaapp.netlify.app/)
 
 ## Getting Started
 
