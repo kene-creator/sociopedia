@@ -13,13 +13,16 @@ export default function FriendListWidgets({ userId }) {
   const friends = useSelector((state) => state.user.friends);
 
   const getFriends = async () => {
-    const response = await fetch(`http://localhost:3001/${userId}/friends`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `https://sociopedia-tw54.onrender.com/${userId}/friends`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await response.json();
     dispatch(setFriends({ friends: data.data.friends }));
   };

@@ -23,7 +23,7 @@ export default function Friend({ friendId, subtitle, name, userPicturePath }) {
 
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${_id}/${friendId}`,
+      `https://sociopedia-tw54.onrender.com/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

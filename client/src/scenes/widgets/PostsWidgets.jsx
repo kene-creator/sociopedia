@@ -9,7 +9,7 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
   const token = useSelector((state) => state.token);
 
   const getPost = async () => {
-    const response = await fetch("http://localhost:3001/posts", {
+    const response = await fetch("https://sociopedia-tw54.onrender.com/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
 
   const getUserPost = async () => {
     const response = await fetch(
-      `http://localhost:3001/posts/${userId}/posts`,
+      `https://sociopedia-tw54.onrender.com/posts/${userId}/posts`,
       {
         method: "GET",
         headers: {
@@ -32,7 +32,7 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
       }
     );
     const data = await response.json();
-    dispatch(setPost({ post: data.data.post }));
+    dispatch(setPosts({ post: data.data.post }));
   };
 
   useEffect(() => {

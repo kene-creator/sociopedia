@@ -45,22 +45,28 @@ export default function Navbar() {
 
   const handleChange = async (e) => {
     setSearch(e.target.value);
-    const response = await fetch("http://localhost:3001/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ payload: search }),
-    });
+    const response = await fetch(
+      "https://sociopedia-tw54.onrender.com/search",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payload: search }),
+      }
+    );
     const searchResults = await response.json();
     setSearchResults(searchResults.users);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3001/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ payload: search }),
-    });
+    const response = await fetch(
+      "https://sociopedia-tw54.onrender.com/search",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payload: search }),
+      }
+    );
     const searchResults = await response.json();
     console.log(searchResults.users);
     setSearchResults(searchResults.users);

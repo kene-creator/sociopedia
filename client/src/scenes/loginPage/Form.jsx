@@ -63,10 +63,13 @@ export default function Form() {
     }
     formData.append("picturePath", values.picture.name);
 
-    const response = await fetch("http://localhost:3001/auth/register", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://sociopedia-tw54.onrender.com/auth/register",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const savedUser = await response.json();
     onSubmitProps.resetForm();
     if (savedUser) {
@@ -75,11 +78,14 @@ export default function Form() {
   };
 
   const login = async (values, onSubmitProps) => {
-    const response = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
+    const response = await fetch(
+      "https://sociopedia-tw54.onrender.com/auth/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      }
+    );
     const loggedInUser = await response.json();
     onSubmitProps.resetForm();
 
