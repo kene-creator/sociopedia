@@ -84,7 +84,7 @@ export default function Navbar() {
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem,2.25rem)"
           color="primary"
-          onClick={() => navigate("/users")}
+          onClick={() => navigate("/home")}
           sx={{
             "&:hover": {
               color: primaryLight,

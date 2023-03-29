@@ -124,7 +124,7 @@ export default function Form() {
       setSnackbarMessage("Login successful✅");
       setSnackbarSeverity("success");
       setTimeout(() => {
-        navigate("/users");
+        navigate("/home");
       }, 2000);
     } catch (err) {
       setOpenSnackbar(true);

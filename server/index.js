@@ -8,7 +8,6 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import history from "connect-history-api-fallback";
 
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/post.js";
@@ -51,10 +50,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
-//* HISTORY
-app.use(history());
-app.use(express.static(path.join(__dirname, "client")));
 
 //? ROUTES WITH FILES
 app.post("/search", search);
