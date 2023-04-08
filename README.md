@@ -43,6 +43,7 @@ To get a local copy up and running follow these simple example steps.
 - eslint
 - React
 - Node.js
+- Docker
 
 ## Author 1
 
